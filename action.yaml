@@ -33,6 +33,9 @@ inputs:
   label:
     description: "Label to add"
     required: false
+  target:
+    description: "Branch"
+    required: false
 
 runs:
   using: "docker"
