@@ -48,7 +48,7 @@ else
 if [[ -z "${INPUT_TARGET}" ]]; then
   TARGET="master"
 else
-  TARGET="main"
+  TARGET="${INPUT_TARGET}"
 fi
   # Commit and upload change
   git commit -a -m "${INPUT_COMMIT_MSG}"
