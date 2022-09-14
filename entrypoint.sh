@@ -15,6 +15,7 @@ echo "INPUT_DRAFT: ${INPUT_DRAFT}"
 echo "INPUT_USER: ${INPUT_USER}"
 echo "INPUT_EMAIL: ${INPUT_EMAIL}"
 echo "INPUT_LABEL: ${INPUT_LABEL}"
+echo "INPUT_TARGET: ${INPUT_TARGET}"
 echo "---------------------------------------------------"
 
 # Clone repository and run command
@@ -42,6 +43,13 @@ elif [ -z "$(git diff-index HEAD)" ]; then
   echo "COMMAND did not change the status of the repository. Exiting."
   exit 1
 else
+
+# Set TARGET branch
+if [[ -z "${INPUT_TARGET}" ]]; then
+  TARGET="master"
+else
+  TARGET="main"
+fi
   # Commit and upload change
   git commit -a -m "${INPUT_COMMIT_MSG}"
   git push origin ${INPUT_BRANCH}
@@ -54,7 +62,6 @@ else
   HEADER="${HEADER}; application/vnd.github.antiope-preview+json; application/vnd.github.shadow-cat-preview+json"
   REPO_URL="${BASE}/repos/${INPUT_GROUP}/${INPUT_REPOSITORY}"
   PULLS_URL=${REPO_URL}/pulls
-  TARGET="master"
   SOURCE="${INPUT_BRANCH}"
   BODY="---"
   DATA="{\"title\":\"${INPUT_COMMIT_MSG}\", \"body\":\"${BODY}\", \"base\":\"${TARGET}\", \"head\":\"${SOURCE}\", \"draft\":${INPUT_DRAFT}}"
